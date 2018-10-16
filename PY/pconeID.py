@@ -12,7 +12,7 @@ def pconeID(pdid):
     strnum = soup.select('script')[23].text.find("window._pc_p = ") #提取JSON資料
     gotjson = soup.select('script')[23].text[strnum+len("window._pc_p = "):-2]
     load = json.loads(gotjson)  #轉成python dict
-
+    output.insert(1.0,load['product_name'])
     for i in range(len(load['volumes'])):
         output.insert(1.0,str(load['volumes'][i]['volume_id'])+"   "+str(load['volumes'][i]['volume_remaining'])+" "+str(load['volumes'][i]['option'])+"\n")
 

@@ -40,7 +40,6 @@ def shopeeExcel(path):
     return prdid
 def run():
     print(filepath)
-    delsheet("商品ID!R:R")
     getidlist = getsheet("商品ID!I:J")
     oklist = shopeeExcel(filepath) #讀取EXCEL
     #提取sheet 資料
@@ -75,6 +74,7 @@ def run():
                 noidlist.append(oklist[i]["ID"])
 
     wrval[0] = ["Shopee"+ time.strftime("%m/%d", time.localtime())]
+    delsheet("商品ID!R:R")
     writesheet("商品ID!R1",wrval)
 
 gui=tk.Tk()

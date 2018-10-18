@@ -25,7 +25,6 @@ def getpcone(pid):
     return outObj
 
 def getALLpcone():
-    delsheet("商品ID!Q:Q")
     prdidData = getsheet('商品ID!O:P') #獲取試算表所有資料
     wiAry=[]
     tiAry= []
@@ -52,6 +51,7 @@ def getALLpcone():
             except:
                 wrval[row] = [""]
     wrval[0][0] = "Pcone" + time.strftime("%m/%d", time.localtime())
+    delsheet("商品ID!Q:Q")
     writesheet("商品ID!Q1",wrval)
     print("OK")
 	

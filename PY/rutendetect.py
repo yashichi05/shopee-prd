@@ -28,10 +28,11 @@ def rutendetect():
         my_headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
         gotrq = requests.get(url,headers = my_headers)
         soup = BeautifulSoup(gotrq.text, "html.parser") #"html.parser" html解析器 將html 轉為bs4格式操作
-        rutenhtml = soup.find_all('div','item-img-wrap tagging-class')
+        rutenhtml = soup.find_all('div','rt-product-tag-container tagging-class')
+        end = soup.find_all("div",class_ = "item-img-wrap")
         for i in range(len(rutenhtml)):
             allid.append(rutenhtml[i]['name'])
-        if len(rutenhtml) == 0:
+        if len(end) == 0:
             break
 
     output.insert(1.0,"\n")

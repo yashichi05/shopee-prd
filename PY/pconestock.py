@@ -14,9 +14,14 @@ def getpcone(pid):
     my_headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
     gotrq = requests.get(url,headers = my_headers)
     soup = BeautifulSoup(gotrq.text, "html.parser") #"html.parser" html解析器 將html 轉為bs4格式操作
-    strnum = soup.select('script')[23].text.find("window._pc_p = ") #提取JSON資料
-    gotjson = soup.select('script')[23].text[strnum+len("window._pc_p = "):-2]
-    load = json.loads(gotjson)  #轉成python dict
+    try:
+        strnum = soup.select('script')[23].text.find("window._pc_p = ") #提取JSON資料
+        gotjson = soup.select('script')[23].text[strnum+len("window._pc_p = "):-2]
+        load = json.loads(gotjson)  #轉成python dict
+    except:
+        strnum = soup.select('script')[24].text.find("window._pc_p = ") #提取JSON資料
+        gotjson = soup.select('script')[24].text[strnum+len("window._pc_p = "):-2]
+        load = json.loads(gotjson)  #轉成python dict
     outObj = {"state":"0","prd":""}
     prdAry = []
     for i in range(len(load['volumes'])):
@@ -36,7 +41,6 @@ def getALLpcone():
     for row in range(len(prdidData)):
         print(str(row)+"/"+str(len(prdidData)))
         try:
-            	
             if prdidData[row][0]:
                 gotstock = getpcone(prdidData[row][0])
                 for i in range(len(gotstock["prd"])):
@@ -54,8 +58,5 @@ def getALLpcone():
     delsheet("商品ID!Q:Q")
     writesheet("商品ID!Q1",wrval)
     print("OK")
-	
-	
 
-	
 getALLpcone()

@@ -10,8 +10,8 @@ def rutenID(rid):
     my_headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
     gotrq = requests.get(url,headers = my_headers)
     soup = BeautifulSoup(gotrq.text, "html.parser") #"html.parser" html解析器 將html 轉為bs4格式操作
-    strnum = soup.select('script[type="text/javascript"]')[17].text.find("RT.context = ") #提取JSON資料 #find 找到RT.context的位址
-    gotjson = soup.select('script[type="text/javascript"]')[17].text[strnum+len("RT.context = "):-2]
+    strnum = soup.select('script[type="text/javascript"]')[16].text.find("RT.context = ") #提取JSON資料 #find 找到RT.context的位址
+    gotjson = soup.select('script[type="text/javascript"]')[16].text[strnum+len("RT.context = "):-2]
     load = json.loads(gotjson)  #轉成python dict
     if 'spec_info' in load.keys(): #是否有款式
         for k,v in load['spec_info']['specs'].items():#for 出dict 資料

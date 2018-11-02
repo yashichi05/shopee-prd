@@ -31,7 +31,10 @@ def rutendetect():
         rutenhtml = soup.find_all('div','rt-product-tag-container tagging-class')
         end = soup.find_all("div",class_ = "item-img-wrap")
         for i in range(len(rutenhtml)):
-            allid.append(rutenhtml[i]['name'])
+            try:#若裡面沒有重複值則新增
+                allid.index(rutenhtml[i]['name'])
+            except:
+                allid.append(rutenhtml[i]['name'])
         if len(end) == 0:
             break
 
@@ -50,6 +53,7 @@ def rutendetect():
         except:
             output.insert(1.0,str(allid[i])+"\n")
     output.insert(1.0,"偵測完成\n")
+
 
 
 

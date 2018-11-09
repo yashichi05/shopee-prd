@@ -3,7 +3,17 @@ from bs4 import BeautifulSoup
 import tkinter as tk
 import requests
 import json
-
+import re
+def remove_emoji(data):#去除emojis
+    if not data:
+        return data
+    try:
+    # UCS-4
+        patt = re.compile(u'([\U00002600-\U000027BF])|([\U0001f300-\U0001f64F])|([\U0001f680-\U0001f6FF])')
+    except re.error:
+    # UCS-2
+        patt = re.compile(u'([\u2600-\u27BF])|([\uD83C][\uDF00-\uDFFF])|([\uD83D][\uDC00-\uDE4F])|([\uD83D][\uDE80-\uDEFF])')
+    return patt.sub('', data)
 def rutenID(rid):
 
     url = "https://goods.ruten.com.tw/item/show?"+rid
@@ -23,7 +33,7 @@ def rutenID(rid):
             output.insert(1.0,'\n')
     else:
          output.insert(1.0,'\n'+str(load['remain_count']))
-    output.insert(1.0,'\n'+load['g_name'])
+    output.insert(1.0,'\n'+remove_emoji(load['g_name']))
     output.insert(1.0,"有上架嗎?"+str(load['is_product_buyer']))
     
 

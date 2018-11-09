@@ -1,0 +1,1 @@
+C:\ProgramData\Anaconda3\python.exe rutenstock.py

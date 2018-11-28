@@ -29,10 +29,10 @@ def getpcd(pid):
     prdAry = []
     if type(load) == dict: #新上的都是字典檔
         for k,v in load.items():
-            output.insert(1.0,"\n"+v['p_sseq']+"   "+v['p_spec']+"  數量:"+v['p_invt'])
+            output.insert(1.0,"\n"+v['p_spec']+"   "+v['p_sseq']+"  數量:"+v['p_invt'])
     else:#舊的都是陣列
         for i in range(len(load)):
-            output.insert(1.0,"\n"+load[i]['p_sseq']+"   "+load[i]['p_spec']+"  數量:"+load[i]['p_invt'])
+            output.insert(1.0,"\n"+load[i]['p_spec']+"   "+load[i]['p_sseq']+"  數量:"+load[i]['p_invt'])
     outObj["prd"] = prdAry
     output.insert(1.0,"\n")
     output.insert(1.0,remove_emoji(soup.select('.info .tit')[0].get_text()))

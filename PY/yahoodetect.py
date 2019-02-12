@@ -25,15 +25,15 @@ def yahoodetect():
     for page in range(1,200):
         try:
             output.insert(1.0,".")
-            url = "https://tw.bid.yahoo.com/tw/booth/Y3489416698?userID=Y3489416698&s1=&o1=&catID=&catIDselect=&clf=&at=true&u=:Y3489416698&apg="+str(page)+"#bd"
+            url = "https://tw.bid.yahoo.com/booth/Green-Forest-Y3489416698?bfe=1&page="+str(page)
             my_headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
             gotrq = requests.get(url,headers = my_headers)
             soup = BeautifulSoup(gotrq.text, "html.parser") #"html.parser" html解析器 將html 轉為bs4格式操作
-            yahoohtml = soup.find_all('li','item booth-imp ')
+            yahoohtml = soup.find_all('div','item-wrap')
             if len(yahoohtml) == 0 : #找完跳出
                 break
             for i in range(len(yahoohtml)):
-                allid.append(yahoohtml[i]['data-itemid'])    
+                allid.append(yahoohtml[i]['data-mid'])    
 
         except:
             print("end")

@@ -4,6 +4,7 @@ import tkinter as tk
 import requests
 import json
 import re
+
 def remove_emoji(data):#去除emojis
     if not data:
         return data
@@ -14,6 +15,7 @@ def remove_emoji(data):#去除emojis
     # UCS-2
         patt = re.compile(u'([\u2600-\u27BF])|([\uD83C][\uDF00-\uDFFF])|([\uD83D][\uDC00-\uDE4F])|([\uD83D][\uDE80-\uDEFF])')
     return patt.sub('', data)
+
 def rutenID(rid):
 
     url = "https://goods.ruten.com.tw/item/show?"+rid
@@ -23,8 +25,8 @@ def rutenID(rid):
     strnum = soup.select('script[type="text/javascript"]')[15].text.find("RT.context = ") #提取JSON資料 #find 找到RT.context的位址
     gotjson = soup.select('script[type="text/javascript"]')[15].text[strnum+len("RT.context = "):-2]
     load = json.loads(gotjson)  #轉成python dict
-    if 'spec_info' in load.keys(): #是否有款式
-        for k,v in load['spec_info']['specs'].items():#for 出dict 資料
+    if load['item']['specInfo']: #是否有款式
+        for k,v in load['item']['specInfo']['specs'].items():#for 出dict 資料
             try:
                 output.insert(1.0,'\n'+str(v['spec_ext']['goods_no']))
             except:
@@ -32,9 +34,9 @@ def rutenID(rid):
             output.insert(1.0,'\n'+k+' :'+v['spec_num']+" "+v['spec_name'])
             output.insert(1.0,'\n')
     else:
-         output.insert(1.0,'\n'+str(load['remain_count']))
-    output.insert(1.0,'\n'+remove_emoji(load['g_name']))
-    output.insert(1.0,"有上架嗎?"+str(load['is_product_buyer']))
+         output.insert(1.0,'\n'+str(load['item']['remainNum']))
+    output.insert(1.0,'\n'+remove_emoji(load['item']['name']))
+    output.insert(1.0,"下架了嗎?"+str(load['item']['isSoldEnd']))
     
 
 def clickbtn():

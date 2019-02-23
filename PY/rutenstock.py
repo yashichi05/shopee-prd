@@ -1,3 +1,4 @@
+#露天全部
 import requests
 import json
 import time
@@ -19,15 +20,15 @@ def getruten(pid):
     load = json.loads(gotjson)  #轉成python dict
     outObj = {"state":"0","prd":""}
     prdAry = []
-    if 'spec_info' in load.keys(): #是否有款式
-        for k,v in load['spec_info']['specs'].items():#for 出dict 資料
+    if load['item']['specInfo']: #是否有款式
+        for k,v in load['item']['specInfo']['specs'].items():#for 出dict 資料
             prdAry.append([k,v['spec_num'],v['spec_name'],v["spec_status"]])
             #print(k+':'+v['spec_num']+" "+v['spec_name']+v["spec_status"])
         outObj["prd"]=prdAry
     else:
-        outObj["prd"]=str(load['remain_count'])
+        outObj["prd"]=str(load['item']['remainNum'])
         #print(load['remain_count'])
-    outObj["state"] = load['is_product_buyer']
+    outObj["state"] = load['item']['isSoldEnd']
     return outObj
 
 def getALLRuten():
@@ -55,7 +56,7 @@ def getALLRuten():
                                 wrval[row]=["款式關閉"]
                     if wrval[row] == "":#都沒有找到
                         wrval[row] = ["款式ID錯誤"]
-                if gotstock["state"] == False:
+                if gotstock["state"] == True:
                     wrval[row] = ["下架"]
         except: #有可能ID錯誤，有可能ID無值
             try:

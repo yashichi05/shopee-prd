@@ -70,7 +70,8 @@ for row in range(rows_count):
         stock_count = int(stock_count)*int(table1.cell_value(row,19)) #庫存數乘以箱入數
         wrval[row] = [stock_count]
     except:
-        pass
+        if table1.cell_value(row,18):
+            wrval[row] = ['none']
 
 wrval[0][0] = "官網" + time.strftime("%m/%d", time.localtime())
 delsheet("庫存表!E:E")
